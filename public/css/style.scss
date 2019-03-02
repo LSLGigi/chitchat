@@ -1,0 +1,142 @@
+@charset "UTF-8";
+$poa:absolute;$por:relative;$pof:fixed;$defaultColor:#02B2B5;$fontColor:#5a5a5a;
+/***
+**** base css ****
+***/
+.clearfix:after{zoom:1;content:".";display:block;height:0;clear:both;visibility:hidden}
+html{overflow-x:hidden;overflow-y:auto;}
+body{font-size:16px;background-color:#fff;font-family: "微软雅黑";margin: 0;padding: 0;
+     background: url(../images/bg.jpg) top center;}
+a{text-decoration: none;
+	&:hover{text-decoration: none;color: $defaultColor;}
+}
+// 区块大小
+@mixin size($width,$height){
+  width: $width;
+  height: $height;
+}
+//过渡
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+/***
+**** chat css (聊天页面主体部分样式）****
+***/
+.wrap{@include size(1200px,640px);margin:50px auto;border: 2px solid $defaultColor;
+	border-radius: 6px;
+	.header{padding: 6px 0;text-align: center;background-color: rgba(0,132,255,.2);
+		h1{font-size: 32px;font-weight: bold;color: $defaultColor;}
+		#state{font-size: 14px;color: $fontColor;}
+	}
+	/*----------------------------聊天内容样式-------------------------------------- */
+	#chatCont{height: 430px; padding: 12px 20px;overflow: auto;
+		//用户及个人消息
+		p.user,p.me{position: relative;font-size: 16px;
+			.userName{position: relative;display: inline-block;color: $fontColor;}
+			.date{display: none;}
+			.chatCont{display: inline-block;max-width: 500px;border-radius: 5px;padding: 6px 14px;}
+			img.emoji{max-width: 150px;}
+			img.uploadImg{max-width: 500px;}
+		}
+		//系统消息
+		p.system{display: table; text-align: center;background-color: #DEDDDD;padding: 2px 6px;border-radius: 4px;
+			    font-size: 14px;color: #fff;margin: 8px auto;
+			    .userName{display: none;}
+			}
+		//用户消息
+		p.user{margin-top: -10px;margin-bottom: 86px;
+			.userName{padding-left: 48px;margin-left: 6px;
+               &:before{position: absolute;top: 16px;left: 0; content: "";width: 36px;height: 36px;
+                   background: url(../images/others.jpg) center no-repeat;background-size: 100%;
+                   border-radius: 4px;}
+			}
+            .chatCont{position: relative;top: 68px;left: -32px;background-color: #fff;
+                 &:before{position:absolute;content:'';width:14px;height:14px;background-color: transparent;
+                         left:-28px;top:10%;margin-top:-5px;border-width:0 16px 16px 0;border-style: solid;
+                         border-right-color: transparent;border-bottom-color:#fff;border-bottom-left-radius:45px;}
+			}
+			img.emoji{margin-left: 15px;}
+			img.uploadImg{margin-left: 20px;}
+		}
+		//个人消息
+		p.me{text-align: right;margin-top: -10px;margin-bottom: 46px;
+			.userName{position: relative;display: block;right: 0; padding-right: 48px;margin-right: 6px;
+				&:after{position: absolute;top: 16px;right: 0; content: "";width: 36px;height: 36px;
+                   background: url(../images/me.jpg) center no-repeat;background-size: 100%;
+                   border-radius: 4px;}
+			}
+            .chatCont{position:relative;top:14px;right:82px;background-color:#50c0f3;text-align: left;
+            	&:after{position:absolute;content:'';width:14px;height:14px;background-color: transparent;
+                         right:-28px;top:10%;margin-top:-5px;border-width:0 0 16px 16px;border-style: solid;
+                         border-left-color: transparent;border-bottom-color:#50c0f3;border-bottom-right-radius:45px;}
+            }
+            img.emoji{margin-right: 90px;}
+            img.uploadImg{margin-right: 100px;margin-top: -20px;}
+		}
+	}
+	/*----------------------------聊天的几种功能及输入框样式-------------------------------------- */
+	.sendCont{position: relative; @include size(1198px,100px);background-color: #fff;border-bottom-left-radius: 6px;border-bottom-right-radius: 6px;
+		     box-shadow: 0 -1px 1px #DADADA;
+		#emojiCont{position: absolute; display: none;width: 620px;max-height: 400px;bottom: 100px;left: 50%;margin-left: -300px;
+			       box-shadow: inset 0 1px 2px 1px #DADADA;padding: 18px 24px;background-color: #ecf3f3;border-radius: 5px;overflow: hidden;
+			img{display: inline-block;width: 50px;margin: 0 9px;}
+		}
+		.controls{text-align: center;
+			.inputImage{@include size(30px,30px);font-size: 0;line-height: 0 !important;text-indent: -9999px;
+			       border: 0;  margin-right: 30px;margin-top: 4px;}
+			#emoji{background: url(../images/emoji.jpg) center no-repeat;background-size: 100% 100%;
+                   &:hover{background: url(../images/emoji_h.jpg) center no-repeat;background-size: 100% 100%;}
+			   }
+			.imageLabel{position: relative;
+				#hiddenImage{
+                }
+				#sendImage{position: absolute;left: 0;overflow: hidden;
+					background: url(../images/upload.jpg) center no-repeat;background-size: 100% 100%;
+                   &:hover{background: url(../images/upload_h.jpg) center no-repeat;background-size: 100% 100%;}
+				}
+			}
+			#clear{background: url(../images/clear.jpg) center no-repeat;background-size: 100% 100%;
+                   &:hover{background: url(../images/clear_h.jpg) center no-repeat;background-size: 100% 100%;}}
+			#color{}
+		}
+		textarea#msgInput{width: 82%;height: 50px;border: 0;padding: 6px 14px;font-size: 18px;overflow: auto;}
+		#sendBtn{float: right;margin-right: 38px;@include size(120px,44px); border: 1px solid #c6e0f9; 
+                background-color: #c6e0f9;@include transition(all,.5s);font-size: 24px;color: $fontColor;
+                &:hover{background-color: $defaultColor;color: #fff;}
+		}
+		input:hover{cursor: pointer;}
+	}
+}
+/***
+**** login css ****
+***/
+#loginWrap{
+	position: fixed;top: 0;left: 0;bottom: 0;right: 0;
+	font-size: 16px;background-color: rgba(0,0,0,.6);text-align: center;
+	padding-top: 200px;
+	#info{font-size: 18px;font-weight: bold;color: $defaultColor;padding-bottom: 6px;}
+	#nickWrap{display: none;
+		#nickname{@include size(240px,40px);line-height: 40px;font-size: 18px;color: fontColor;border: 1px solid $defaultColor;padding: 0 8px;}
+		#loginBtn{@include size(88px,40px);border: 1px solid #c6e0f9; 
+                background-color: #c6e0f9;@include transition(all,.5s);font-size: 24px;color: $fontColor;
+                &:hover{background-color: $defaultColor;color: #fff;cursor: pointer;}
+		}
+	}
+}
+/***
+**** 放大图片效果 ****
+***/
+/* #outerdiv{position: fixed; display: none;top: 0;left: 0;bottom: 0;right: 0;
+       background-color: rgba(0,0,0,.6);padding-top: 200px;
+  #innerdiv{position: absolute;
+	//#bigimg{max-width: 80%;}
+  }
+} */
+/***
+**** footer css ****
+***/
